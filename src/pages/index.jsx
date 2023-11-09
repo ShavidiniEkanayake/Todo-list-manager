@@ -7,6 +7,7 @@ export default function Home() {
 
   const handleLogin = (credentials) => {
     dispatch(login(credentials));
+    router.push('/home');
   };
 
   return (
