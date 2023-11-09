@@ -2,16 +2,22 @@ import { users } from './Data';
 import { todos } from './Data';
 
 export const loginApi = (credentials) => {
-  const user = users.find((u) => u.username === credentials.username && u.password === credentials.password);
-  console.log('Users:', users);
-  return new Promise((resolve, reject) => {
-    if (user) {
-      resolve(user);
-    } else {
-      reject(new Error('Invalid credentials'));
-    }
-  });
-};
+    const user = users.find(
+      (u) =>
+        u.username.trim() === credentials.username.trim() &&
+        u.password.trim() === credentials.password.trim()
+    );
+  
+    console.log('Users:', users);
+  
+    return new Promise((resolve, reject) => {
+      if (user) {
+        resolve(user);
+      } else {
+        reject(new Error('Invalid credentials'));
+      }
+    });
+  };
 
 export const getTodos = () => {
     console.log('Fetching todos...');
