@@ -7,3 +7,8 @@ export const addTodo = (todo) => ({
     type: 'UPDATE_TODO_STATUS',
     payload: { id, status },
   });
+
+  export const fetchTodos = (todos) => ({
+    type: 'FETCH_TODOS',
+    playload: todos
+  });
