@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../redux/actions/authActions';
 import { useRouter } from 'next/router';
 import LoginForm from '../components/LoginForm';
-import { loginApi } from '..//utils/Api';
+import { loginApi } from '../utils/Api';
 import logo from '../assets/logos/LogoFull.svg'
 import LoginBg from '../assets/LoginBg.svg'
 import ArrowIcon from '../assets/Icons/Arrow---Right-Square.svg'
@@ -17,7 +17,7 @@ const Login = () => {
     try {
       const user = await loginApi(credentials);
       dispatch(login(user));
-      router.push('/Home');
+      router.push('/home');
     } catch (error) {
       console.error('Error during login:', error.message);
     }
