@@ -2,7 +2,7 @@ const initialState = {
     todos: [],
   };
   
-  const todoReducer = (state = initialState, action) => {
+  const TodoReducer = (state = initialState, action) => {
     switch (action.type) {
       case 'ADD_TODO':
         return {
@@ -21,5 +21,5 @@ const initialState = {
     }
   };
   
-  export default todoReducer;
+  export default TodoReducer;
   

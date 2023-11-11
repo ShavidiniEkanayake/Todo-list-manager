@@ -1,5 +1,5 @@
-import { users } from './Data';
-import { todos } from './Data';
+import { users } from './data';
+import { todos } from './data';
 
 export const loginApi = (credentials) => {
     const user = users.find(
@@ -20,7 +20,6 @@ export const loginApi = (credentials) => {
   };
 
 export const getTodos = () => {
-    console.log('Fetching todos...');
     return Promise.resolve(todos);
   };
 
@@ -30,4 +29,4 @@ export const updateTodoStatusApi = (id, status) => {
     updatedTodo.status = status;
   }
   return Promise.resolve(updatedTodo);
-};
+}
