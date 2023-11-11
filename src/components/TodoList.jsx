@@ -44,7 +44,6 @@ const TodoList = () => {
   //fetch todo data
   useEffect(() => {
     getTodos().then((data) => {
-      console.log("data", data)
       setData(data);
       data.forEach((todo) => {
         dispatch(addTodo(todo));
@@ -96,9 +95,9 @@ const TodoList = () => {
   };
 
   return (
-    <div className='w-full p-10'>
-      <div className='flex'>
-        <div className='px-5 w-1/3'>
+    <div className='w-full px-10'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='p-5'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Todo</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
             <div className='bg-slate-100 rounded-lg mb-5'>
@@ -186,7 +185,7 @@ const TodoList = () => {
           </div>
         </div>
 
-        <div className='px-5 w-1/3'>
+        <div className='p-5'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>In progress</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
             {todosInProgress.map((todo, key) => (
@@ -201,7 +200,7 @@ const TodoList = () => {
           </div>
         </div>
 
-        <div className='px-5 w-1/3'>
+        <div className='p-5'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Done</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
             {todosDone.map((todo, key) => (
