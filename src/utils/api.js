@@ -1,21 +1,21 @@
-import { users } from './data';
-import { todos } from './data';
+import { users } from "./data";
+import { todos } from "./data";
 
 //login api
 export const loginApi = (credentials) => {
   const user = users.find(
     (u) =>
       u.username.trim() === credentials.username.trim() &&
-      u.password.trim() === credentials.password.trim()
+      u.password.trim() === credentials.password.trim(),
   );
 
-  console.log('Users:', users);
+  console.log("Users:", users);
 
   return new Promise((resolve, reject) => {
     if (user) {
       resolve(user);
     } else {
-      reject(new Error('Invalid credentials'));
+      reject(new Error("Invalid credentials"));
     }
   });
 };
@@ -28,7 +28,7 @@ export const getTodos = () => {
 //add data api
 export const addTodoApi = (newTodo) => {
   const id = todos.length + 1;
-  const todo = { ...newTodo, id, status: 'Todo' };
+  const todo = { ...newTodo, id, status: "Todo" };
   todos.push(todo);
   return Promise.resolve(todo);
 };
@@ -40,4 +40,4 @@ export const updateTodoStatusApi = (id, status) => {
     updatedTodo.status = status;
   }
   return Promise.resolve(updatedTodo);
-}
+};

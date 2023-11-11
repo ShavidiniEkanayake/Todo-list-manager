@@ -6,7 +6,7 @@ const LoginForm = ({ onLogin }) => {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  // log in
+  //log in
   const handleLogin = () => {
     if (!username) {
       setUsernameError("Username is required.");
