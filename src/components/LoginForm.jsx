@@ -30,11 +30,11 @@ const LoginForm = ({ onLogin }) => {
             <div className='flex w-full'>
                 <div className="bg-white md:mt-4 sm:max-w-md text-white w-full max-w-screen-md">
                     <div className='mb-5'>
-                        <label className='font-TTHovesProTrialDemiBold text-black'>
+                        <label className=' text-black font-bold'>
                             Username
                             <input
                                 type="text"
-                                className={`border border-[#898989] rounded-md py-2 mt-2 w-full placeholder:p-2 placeholder:font-TTHovesProTrialRegular ${usernameError ? 'border-red-500' : ''}`}
+                                className={`border border-[#898989] rounded-md p-2 mt-2 w-full placeholder:font-normal ${usernameError ? 'border-red-500' : ''}`}
                                 value={username}
                                 onChange={(e) => {
                                     setUsername(e.target.value);
@@ -48,11 +48,11 @@ const LoginForm = ({ onLogin }) => {
                         </label>
                     </div>
                     <div className='mb-5'>
-                        <label className='font-TTHovesProTrialDemiBold text-black'>
+                        <label className=' text-black font-bold'>
                             Password
                             <input
                                 type="password"
-                                className={`border border-[#898989] rounded-md py-2 mt-2 w-full placeholder:p-2 placeholder:font-TTHovesProTrialRegular ${passwordError ? 'border-red-500' : ''}`}
+                                className={`border border-[#898989] rounded-md p-2 mt-2 w-full placeholder:font-normal ${passwordError ? 'border-red-500' : ''}`}
                                 value={password}
                                 onChange={(e) => {
                                     setPassword(e.target.value);
@@ -65,7 +65,7 @@ const LoginForm = ({ onLogin }) => {
                             )}
                         </label>
                     </div>
-                    <div className='mt-7 bg-black rounded-md text-white font-TTHovesProTrialDemiBold py-3 flex justify-center hover:bg-[#898989] hover:text-black'>
+                    <div className='mt-7 bg-black rounded-md text-white font-TTHovesProTrialDemiBold py-3 flex justify-center hover:bg-black/80 transition-all'>
                         <button onClick={handleLogin} className=''>Login</button>
                     </div>
                 </div>
