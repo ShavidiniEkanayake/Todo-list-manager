@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getTodos } from "../utils/api";
-import { addTodo, updateStatus, updateTask } from "../redux/actions/todoAction";
+import { getTodos } from "../services";
+import { addTodo, updateStatus, updateTask } from "../redux/actions/todo";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
@@ -67,8 +67,7 @@ const TodoList = () => {
         notifySuccess("Added your todo successfully");
       }
     } catch (error) {
-      console.error("Error adding todo:", error);
-      notifyError("Uncussfully added");
+      notifyError("Adding failed");
     }
   };
 
@@ -100,7 +99,6 @@ const TodoList = () => {
   const handleUpdateTask = async () => {
     try {
       if (!selectedTask) {
-        console.error("Error: selectedTask is not defined");
         return;
       }
 
@@ -119,8 +117,7 @@ const TodoList = () => {
       // Display success notification
       notifySuccess("Updated your task successfully");
     } catch (error) {
-      console.error("Error updating task:", error);
-      notifyError("Unsuccessfully updated");
+      notifyError("Updating failed");
     }
   };
 

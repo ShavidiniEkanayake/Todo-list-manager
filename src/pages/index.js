@@ -1,24 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../redux/actions/authActions";
+import * as loginService from "@/services/auth";
 import { useRouter } from "next/router";
-import LoginForm from "../components/LoginForm";
-import { loginApi } from "../utils/Api";
+import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoginForm from "../components/LoginForm";
+import { login } from "../redux/actions/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (credentials) => {
     try {
-      const user = await loginApi(credentials);
+      const user = await loginService.login(credentials);
       dispatch(login(user));
       router.push("/home");
     } catch (error) {
-      console.error("Error during login:", error.message);
       toast.error(`Login failed as ${error.message}`);
     }
   };
@@ -32,11 +29,7 @@ const Login = () => {
             Already you are registered,
           </h2>
         </div>
-        {errorMessage && (
-          <div className="text-red-500 font-TTHovesProTrialDemiBold mb-3">
-            {errorMessage}
-          </div>
-        )}
+
         <ToastContainer
           position="top-right"
           autoClose={5000}

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import ProfilePic from "../assets/Images/profile.png";
 import { useRouter } from "next/router";
-import { logout } from "../redux/actions/authActions";
+import { logout } from "../redux/actions/auth";
 
 const Header = () => {
   const router = useRouter();
