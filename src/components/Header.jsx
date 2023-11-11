@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import Image from "next/image";
 import ProfilePic from "../assets/Images/profile.png";
 import { useRouter } from "next/router";
-import { logout } from "../redux/actions/authActions";
+import { logout } from "../redux/actions/auth";
 
 const Header = () => {
   const router = useRouter();
@@ -42,7 +42,7 @@ const Header = () => {
               <div className="absolute right-0 mt-40 bg-white border rounded-md shadow-md w-40">
                 <div className="p-4">
                   <p className="font-TTHovesProTrialDemiBold text-sm">
-                    John Doe
+                    Shavidini
                   </p>
                   <p className="text-gray-500 text-xs">Developer</p>
                 </div>
