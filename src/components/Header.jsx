@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
-import ProfilePic from "../assets/Images/profile.png";
+import ProfilePic from "../assets/images/profile.png";
 import { useRouter } from "next/router";
 import { logout } from "../redux/actions/auth";
 
