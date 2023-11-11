@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTodos } from '../utils/api';
 import { addTodo } from '../redux/actions/todoAction';
+import { updateTodoStatus } from '../redux/actions/todoAction';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,6 +17,7 @@ const TodoList = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
+  //notification manager
   const notifySuccess = () => {
     toast.success('Todo added successfully!', {
       position: 'top-right',
@@ -27,6 +29,7 @@ const TodoList = () => {
     });
   };
 
+  //notification manager
   const notifyError = () => {
     toast.error('Error adding todo. Please try again.', {
       position: 'top-right',
@@ -38,9 +41,10 @@ const TodoList = () => {
     });
   };
 
+  //fetch todo data
   useEffect(() => {
     getTodos().then((data) => {
-      console.log("aa", data);
+      console.log("data", data)
       setData(data);
       data.forEach((todo) => {
         dispatch(addTodo(todo));
@@ -48,7 +52,9 @@ const TodoList = () => {
     });
   }, [dispatch]);
 
-  const handleAddTodo = async () => {
+  //add todo list
+  const handleAddTodo = async (e) => {
+    e.preventDefault();
     try {
       if (title.trim() !== '') {
         const newTodo = {
@@ -56,10 +62,6 @@ const TodoList = () => {
           description,
           status: 'Todo',
         };
-
-        if (Math.random() < 0.5) {
-          throw new Error('Simulated error');
-        }
 
         dispatch(addTodo(newTodo));
         setModalOpen(false);
@@ -73,18 +75,25 @@ const TodoList = () => {
     }
   };
 
+  //move ti inprogress
+  const handleMoveToInProgress = (id) => {
+    dispatch(updateTodoStatus(id));
+  };
 
-  const todosTodo = data.filter((todo) => todo.status === 'Todo');
-  const todosInProgress = data.filter((todo) => todo.status === 'In Progress');
-  const todosDone = data.filter((todo) => todo.status === 'Done');
+  //filter tasks
+  const todosTodo = todos.filter((todo) => todo.status === 'Todo');
+  const todosInProgress = todos.filter((todo) => todo.status === 'In Progress');
+  const todosDone = todos.filter((todo) => todo.status === 'Done');
 
+  //model open
   const openModal = () => {
     setModalOpen(true);
   };
+
+  //modal close
   const closeModal = () => {
     setModalOpen(false);
   };
-
 
   return (
     <div className='w-full p-10'>
@@ -92,20 +101,10 @@ const TodoList = () => {
         <div className='px-5 w-1/3'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Todo</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
-            {todosTodo.map((todo) => (
-              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-red-300'>
-                <div className='flex flex-row'>
-                  <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
-                  <ArrowCircleRightIcon className='ml-auto w-5' />
-                </div>
-                <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
-              </div>
-            ))}
-
-            <div className='bg-slate-100 rounded-lg'>
+            <div className='bg-slate-100 rounded-lg mb-5'>
               <button className='w-full border-2 p-2 rounded-lg hover hover:bg-black hover:text-white font-TTHovesProTrialDemiBold' onClick={openModal}>Add</button>
               <Modal
-              className=''
+                className=''
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 style={{
@@ -175,20 +174,29 @@ const TodoList = () => {
                 </div>
               </Modal>
             </div>
+            {todosTodo.map((todo, key) => (
+              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-red-300' key={key}>
+                <div className='flex flex-row'>
+                  <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
+                  <ArrowCircleRightIcon className='ml-auto w-5' onClick={() => handleMoveToInProgress(todo.id)} />
+                </div>
+                <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className='px-5 w-1/3'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>In progress</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
-            {todosInProgress.map((todo) => (
-              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-yellow-400'>
-              <div className='flex flex-row'>
-                <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
-                <ArrowCircleRightIcon className='ml-auto w-5' />
+            {todosInProgress.map((todo, key) => (
+              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-yellow-400' key={key}>
+                <div className='flex flex-row'>
+                  <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
+                  <ArrowCircleRightIcon className='ml-auto w-5' />
+                </div>
+                <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
               </div>
-              <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
-            </div>
             ))}
           </div>
         </div>
@@ -196,17 +204,17 @@ const TodoList = () => {
         <div className='px-5 w-1/3'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Done</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
-          {todosDone.map((todo) => (
-           <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-green-500'>
-           <div className='flex flex-row'>
-             <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
-             <ArrowCircleRightIcon className='ml-auto w-5' />
-           </div>
-           <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
-         </div>
-          ))}
+            {todosDone.map((todo, key) => (
+              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-green-500' key={key}>
+                <div className='flex flex-row'>
+                  <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
+                  <ArrowCircleRightIcon className='ml-auto w-5' />
+                </div>
+                <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
+              </div>
+            ))}
           </div>
-          
+
         </div>
       </div>
 
