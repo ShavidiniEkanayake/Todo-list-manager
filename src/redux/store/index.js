@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from "redux";
-import authReducer from "../reducers/auth";
-import todoReducer from "../reducers/todo";
+import authReducer from "@/redux/reducers/auth";
+import todoReducer from "@/redux/reducers/todo";
 
 const rootReducer = combineReducers({
   auth: authReducer,

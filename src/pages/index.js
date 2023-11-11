@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginForm from "../components/LoginForm";
-import { login } from "../redux/actions/auth";
+import LoginForm from "@/components/LoginForm";
+import { login } from "@/redux/actions/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
