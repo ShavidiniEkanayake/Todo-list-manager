@@ -26,7 +26,7 @@ jobs:
       
       - name: Fix base URL 🔧
         run: | 
-          sed -i "s/basePath: ''/basePath: '\/todo-list-manager'/" next.config.js
+          sed -i "s/basePath: \"\"/basePath: '\/todo-list-manager'/" next.config.js
 
       - name: Create .no jekyll file 🚧
         run: touch ./out/.nojekyll
