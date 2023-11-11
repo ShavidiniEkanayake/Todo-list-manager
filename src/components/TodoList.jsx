@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const TodoList = () => {
   const dispatch = useDispatch();
+  const [data, setData] = useState([]);
   const todos = useSelector((state) => state.todo.todos);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -26,7 +27,7 @@ const TodoList = () => {
     });
   };
 
-   const notifyError = () => {
+  const notifyError = () => {
     toast.error('Error adding todo. Please try again.', {
       position: 'top-right',
       autoClose: 3000,
@@ -39,9 +40,10 @@ const TodoList = () => {
 
   useEffect(() => {
     getTodos().then((data) => {
-      console.log("aa", data)
+      console.log("aa", data);
+      setData(data);
       data.forEach((todo) => {
-        // dispatch(addTodo(todo));
+        dispatch(addTodo(todo));
       });
     });
   }, [dispatch]);
@@ -72,9 +74,9 @@ const TodoList = () => {
   };
 
 
-  const todosTodo = todos.filter((todo) => todo.status === 'Todo');
-  const todosInProgress = todos.filter((todo) => todo.status === 'In Progress');
-  const todosDone = todos.filter((todo) => todo.status === 'Done');
+  const todosTodo = data.filter((todo) => todo.status === 'Todo');
+  const todosInProgress = data.filter((todo) => todo.status === 'In Progress');
+  const todosDone = data.filter((todo) => todo.status === 'Done');
 
   const openModal = () => {
     setModalOpen(true);
@@ -86,27 +88,24 @@ const TodoList = () => {
 
   return (
     <div className='w-full p-10'>
-      <h2>Todo List</h2>
-
       <div className='flex'>
-        <div className='p-5 w-1/3'>
+        <div className='px-5 w-1/3'>
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Todo</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
-            <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-red-300'>
-              {/* {todosTodo.map((todo) => ( */}
-              <div>
-                {/* <p>{todo.id}</p> */}
+            {todosTodo.map((todo) => (
+              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-red-300'>
                 <div className='flex flex-row'>
-                  <p className='font-TTHovesProTrialDemiBold'>Tittle</p>
+                  <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
                   <ArrowCircleRightIcon className='ml-auto w-5' />
                 </div>
                 <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
               </div>
-              {/* ))} */}
-            </div>
-            <div className='bg-slate-100 p-5 rounded-lg'>
-              <button onClick={openModal}>Add</button>
+            ))}
+
+            <div className='bg-slate-100 rounded-lg'>
+              <button className='w-full border-2 p-2 rounded-lg hover hover:bg-black hover:text-white font-TTHovesProTrialDemiBold' onClick={openModal}>Add</button>
               <Modal
+              className=''
                 isOpen={isModalOpen}
                 onRequestClose={closeModal}
                 style={{
@@ -143,7 +142,7 @@ const TodoList = () => {
                         />
                       </div>
                     </div>
-                    {/* <div className="flex justify-center">
+                    <div className="flex justify-center">
                       <div className="w-full">
                         <label
                           htmlFor="content"
@@ -161,12 +160,12 @@ const TodoList = () => {
                           onChange={(e) => setDescription(e.target.value)}
                         />
                       </div>
-                    </div> */}
+                    </div>
                     <div className="flex justify-center">
                       <div className="w-full flex justify-center">
                         <button
                           onClick={handleAddTodo}
-                          className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+                          className="bg-black font-TTHovesProTrialDemiBold text-white font-bold py-2 px-4 rounded-lg w-full text-center  hover:bg-slate-100 hover:text-black hover:border-2"
                         >
                           Add
                         </button>
@@ -179,19 +178,35 @@ const TodoList = () => {
           </div>
         </div>
 
-
-        <div className='bg-yellow-300  w-1/3'>
-          <h3>In Progress</h3>
-          {todosInProgress.map((todo) => (
-            <p>{todo.id}</p>
-          ))}
+        <div className='px-5 w-1/3'>
+          <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>In progress</h3>
+          <div className='bg-slate-100 p-5 rounded-lg'>
+            {todosInProgress.map((todo) => (
+              <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-yellow-400'>
+              <div className='flex flex-row'>
+                <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
+                <ArrowCircleRightIcon className='ml-auto w-5' />
+              </div>
+              <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
+            </div>
+            ))}
+          </div>
         </div>
 
-        <div className='bg-green-400  w-1/3'>
-          <h3>Done</h3>
+        <div className='px-5 w-1/3'>
+          <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Done</h3>
+          <div className='bg-slate-100 p-5 rounded-lg'>
           {todosDone.map((todo) => (
-            <p>{todo.id}</p>
+           <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-green-500'>
+           <div className='flex flex-row'>
+             <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
+             <ArrowCircleRightIcon className='ml-auto w-5' />
+           </div>
+           <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
+         </div>
           ))}
+          </div>
+          
         </div>
       </div>
 
