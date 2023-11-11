@@ -1,24 +1,24 @@
-import React, {useState} from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../redux/actions/authActions';
-import { useRouter } from 'next/router';
-import LoginForm from '../components/LoginForm';
-import { loginApi } from '../utils/Api';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions/authActions";
+import { useRouter } from "next/router";
+import LoginForm from "../components/LoginForm";
+import { loginApi } from "../utils/Api";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async (credentials) => {
     try {
       const user = await loginApi(credentials);
       dispatch(login(user));
-      router.push('/home');
+      router.push("/home");
     } catch (error) {
-      console.error('Error during login:', error.message);
+      console.error("Error during login:", error.message);
       toast.error(`Login failed as ${error.message}`);
     }
   };
@@ -27,15 +27,27 @@ const Login = () => {
     <div className="flex items-center justify-center h-screen">
       <div className="w-1/3 p-10 mx-auto border border-[#ababab] rounded-lg">
         <div className="text-center">
-          <p className='font-TTHovesProTrialDemiBold text-3xl pb-3'>My Todos</p>
-          <h2 className='font-TTHovesProTrialDemiBold text-darkblue text-sm text-center'>Already you are registered,</h2>
+          <p className="font-TTHovesProTrialDemiBold text-3xl pb-3">My Todos</p>
+          <h2 className="font-TTHovesProTrialDemiBold text-darkblue text-sm text-center">
+            Already you are registered,
+          </h2>
         </div>
         {errorMessage && (
           <div className="text-red-500 font-TTHovesProTrialDemiBold mb-3">
             {errorMessage}
           </div>
         )}
-        <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <LoginForm onLogin={handleLogin} />
       </div>
     </div>
