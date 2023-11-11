@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 const TodoList = () => {
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
   const todos = useSelector((state) => state.todo.todos);
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -18,8 +17,8 @@ const TodoList = () => {
   const [description, setDescription] = useState('');
 
   //notification manager
-  const notifySuccess = () => {
-    toast.success('Todo added successfully!', {
+  const notifySuccess = (message) => {
+    toast.success(message, {
       position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,
@@ -30,8 +29,8 @@ const TodoList = () => {
   };
 
   //notification manager
-  const notifyError = () => {
-    toast.error('Error adding todo. Please try again.', {
+  const notifyError = (message) => {
+    toast.error(message, {
       position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,
@@ -44,12 +43,15 @@ const TodoList = () => {
   //fetch todo data
   useEffect(() => {
     getTodos().then((data) => {
-      setData(data);
       data.forEach((todo) => {
         dispatch(addTodo(todo));
       });
     });
   }, [dispatch]);
+
+  useEffect(() =>{
+    console.log(todos);
+  },[todos])
 
   //add todo list
   const handleAddTodo = async (e) => {
@@ -66,17 +68,36 @@ const TodoList = () => {
         setModalOpen(false);
         setTitle('');
         setDescription('');
-        notifySuccess();
+        notifySuccess('Added your todo successfully');
       }
     } catch (error) {
       console.error('Error adding todo:', error);
-      notifyError();
+      notifyError('Uncussfully added');
     }
   };
 
-  //move ti inprogress
-  const handleMoveToInProgress = (id) => {
-    dispatch(updateTodoStatus(id));
+  //update status part
+  const handleUpdate = async (id) => {
+    const todoToUpdate = todos.find(todo => todo.id === id);
+
+    if (todoToUpdate) {
+      let newStatus;
+      if (todoToUpdate.status === 'Todo') {
+        newStatus = 'In Progress';
+      } else if (todoToUpdate.status === 'In Progress') {
+        newStatus = 'Done';
+      }
+
+      try {
+        dispatch(updateTodoStatus(id, newStatus));
+
+        // Display success notification
+        notifySuccess('Todo status updated successfully!');
+      } catch (error) {
+        // Display error notification
+        notifyError('Error updating todo status. Please try again.');
+      }
+    }
   };
 
   //filter tasks
@@ -98,10 +119,11 @@ const TodoList = () => {
     <div className='w-full px-10'>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
         <div className='p-5'>
+        <ToastContainer />
           <h3 className='mb-5 font-TTHovesProTrialDemiBold p-4 bg-slate-100 rounded-md '>Todo</h3>
           <div className='bg-slate-100 p-5 rounded-lg'>
             <div className='bg-slate-100 rounded-lg mb-5'>
-              <button className='w-full border-2 p-2 rounded-lg hover hover:bg-black hover:text-white font-TTHovesProTrialDemiBold' onClick={openModal}>Add</button>
+              <button className='w-full border-2 p-2 rounded-lg hover hover:bg-black hover:text-white font-TTHovesProTrialDemiBold' onClick={openModal}>Add Task</button>
               <Modal
                 className=''
                 isOpen={isModalOpen}
@@ -165,7 +187,7 @@ const TodoList = () => {
                           onClick={handleAddTodo}
                           className="bg-black font-TTHovesProTrialDemiBold text-white font-bold py-2 px-4 rounded-lg w-full text-center  hover:bg-slate-100 hover:text-black hover:border-2"
                         >
-                          Add
+                          Add Task
                         </button>
                       </div>
                     </div>
@@ -177,7 +199,7 @@ const TodoList = () => {
               <div className='bg-white p-5 rounded-md shadow-md border-l-4 mb-5 border-red-300' key={key}>
                 <div className='flex flex-row'>
                   <p className='font-TTHovesProTrialDemiBold'>{todo.title}</p>
-                  <ArrowCircleRightIcon className='ml-auto w-5' onClick={() => handleMoveToInProgress(todo.id)} />
+                  <ArrowCircleRightIcon className='ml-auto w-5' onClick={() => handleUpdate(todo.id)} />
                 </div>
                 <p className='font-TTHovesProTrialRegular mt-3'>Lorem ipsum dore aikllla sknkt wo al jneknknkndunkdnkns</p>
               </div>

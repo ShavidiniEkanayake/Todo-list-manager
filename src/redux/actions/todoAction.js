@@ -5,10 +5,10 @@ export const addTodo = (todo) => ({
 });
 
 //update todo data
-// export const updateTodoStatus = (id, status) => ({
-//   type: 'UPDATE_TODO_STATUS',
-//   payload: { id, status },
-// });
+export const updateStatus = (id, status) => ({
+  type: 'UPDATE_STATUS',
+  payload: { id, status },
+});
 
 //tetch todo data
 export const fetchTodos = (todos) => ({
@@ -17,9 +17,7 @@ export const fetchTodos = (todos) => ({
 });
 
 //update todo to inprogress
-export const updateTodoStatus = (id) => ({
+export const updateTodoStatus = (id,status) => ({
   type: 'UPDATE_TODO_STATUS',
-  payload: {
-    id,
-  },
+  payload: { id, status },
 });
