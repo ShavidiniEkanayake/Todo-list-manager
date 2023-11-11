@@ -20,13 +20,13 @@ jobs:
   
       - name: Install dependencies
         run: npm install
-  
-      - name: Build changes
-        run: npm run build
-      
+
       - name: Fix base URL 🔧
         run: | 
           sed -i "s/basePath: \"\"/basePath: '\/todo-list-manager'/" next.config.js
+  
+      - name: Build changes
+        run: npm run build
 
       - name: Create .no jekyll file 🚧
         run: touch ./out/.nojekyll
