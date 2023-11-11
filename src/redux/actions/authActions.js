@@ -1,12 +1,12 @@
 //login action
 export const login = (credentials) => {
   return {
-    type: 'LOGIN',
+    type: "LOGIN",
     payload: credentials,
   };
 };
 
 //log out action
 export const logout = () => ({
-  type: 'LOGOUT',
+  type: "LOGOUT",
 });
