@@ -26,9 +26,9 @@ const LoginForm = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-row w-full justify-center">
-      <div className="flex w-full">
-        <div className="bg-white md:mt-4 sm:max-w-md text-white w-full max-w-screen-md">
+    <div className="flex flex-col items-center w-full">
+    <div className="w-full">
+        <div className="bg-white md:mt-4 sm:max-w-sm text-white w-full max-w-screen-md">
           <div className="mb-5">
             <label className=" text-black font-bold">
               Username
