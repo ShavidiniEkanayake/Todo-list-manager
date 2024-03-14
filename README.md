@@ -36,6 +36,6 @@ This web application allows users to manage to-do lists with different statuses 
 
 - **Redux**: A predictable state container for JavaScript apps. [Redux Documentation](https://redux.js.org/)
 
-Please use the following credentials to login
-Username: user1
-Password: password1
+## Please use the following credentials to login
+- Username: user1
+- Password: password1
